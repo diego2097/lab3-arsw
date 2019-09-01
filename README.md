@@ -10,8 +10,8 @@ Se debe tener instalados los siguientes programas en nuestro sistema operativo:
 - Git
 - Java
 ## Contenido 
-- [Grammar Checker](https://github.com/diego2097/lab1-arsw/tree/master/BBP_formula)
-- [Blueprint Managment 1](https://github.com/diego2097/lab1-arsw/tree/master/Dogs%20race%20case)
+- [Grammar Checker](https://github.com/diego2097/lab3-arsw/tree/master/Grammar-Checker)
+- [Blueprint Managment 1](https://github.com/diego2097/lab3-arsw/tree/master/BLUEPRINTS-PART1)
 
 ## Construido en
 - Maven: una herramienta de software para la gestión y construcción de proyectos java
