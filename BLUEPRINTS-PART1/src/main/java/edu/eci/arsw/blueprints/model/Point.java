@@ -5,6 +5,8 @@
  */
 package edu.eci.arsw.blueprints.model;
 
+import edu.eci.arsw.blueprints.persistence.impl.Tuple;
+
 /**
  *
  * @author hcadavid
@@ -38,6 +40,14 @@ public class Point {
         this.y = y;
     }
     
+    @Override
+    public boolean equals(Object obj) {
+        final Point other = (Point) obj;
+        if (this.getX()==other.getX() && this.getY()==other.getY()){
+            return true;
+        }
+        else return false;
     
+    }
     
 }

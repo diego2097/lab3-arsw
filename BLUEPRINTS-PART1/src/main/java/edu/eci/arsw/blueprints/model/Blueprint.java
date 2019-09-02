@@ -12,6 +12,10 @@ public class Blueprint {
     private String author=null;
     
     private List<Point> points=null;
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
+    }
     
     private String name=null;
             

@@ -5,15 +5,16 @@
  */
 package edu.eci.arsw.blueprints.test.persistence.impl;
 
+import edu.eci.arsw.blueprints.filter.impl.SubsamplingFiltering;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -88,20 +89,54 @@ public class InMemoryPersistenceTest {
         }
 
     }
-     @Test
-    public void getBlueprintsByAuthor() throws BlueprintPersistenceException, BlueprintNotFoundException{
-        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
-        Point[] pts0=new Point[]{new Point(40, 40),new Point(15, 15)};
-        Blueprint bp0=new Blueprint("mack", "mypaint",pts0);
+
+    @Test
+    public void getBlueprintsByAuthor() throws BlueprintPersistenceException, BlueprintNotFoundException {
+        InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
+        Point[] pts0 = new Point[]{new Point(40, 40), new Point(15, 15)};
+        Blueprint bp0 = new Blueprint("mack", "mypaint", pts0);
         ibpp.saveBlueprint(bp0);
-        Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
-        Blueprint bp=new Blueprint("john", "thepaint",pts);
+        Point[] pts = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp = new Blueprint("john", "thepaint", pts);
         ibpp.saveBlueprint(bp);
-        Blueprint bp2=new Blueprint("john", "thepaint2",pts);
+        Blueprint bp2 = new Blueprint("john", "thepaint2", pts);
         ibpp.saveBlueprint(bp2);
-        Set<Blueprint> bpn=new HashSet<Blueprint>();bpn.add(bp);bpn.add(bp2);
-        assertNotNull("Loading a previously stored blueprints returned null.",ibpp.getBlueprintsByAuthor(bp.getAuthor()));
-        assertEquals("Loading a previously stored blueprints returned a different blueprints.",ibpp.getBlueprintsByAuthor(bp.getAuthor()), bpn);
+        Set<Blueprint> bpn = new HashSet<Blueprint>();
+        bpn.add(bp);
+        bpn.add(bp2);
+        assertNotNull("Loading a previously stored blueprints returned null.", ibpp.getBlueprintsByAuthor(bp.getAuthor()));
+        assertEquals("Loading a previously stored blueprints returned a different blueprints.", ibpp.getBlueprintsByAuthor(bp.getAuthor()), bpn);
+    }
+
+    @Test
+    public void SubsamplingFiltering() {
+        SubsamplingFiltering filtro = new SubsamplingFiltering();
+
+        Point[] pts0 = new Point[]{new Point(40, 30), new Point(30, 40), new Point(40, 30), new Point(40, 80), new Point(40, 100), new Point(100, 40)};
+        Blueprint bp0 = new Blueprint("mack", "mypaint", pts0);
+        Point[] pts1 = new Point[]{new Point(20, 15), new Point(40, 40)};
+        Blueprint bp1 = new Blueprint("john", "mypaintJ", pts1);
+        Point[] pts2 = new Point[]{new Point(40, 40), new Point(25, 40), new Point(40, 25)};
+        Blueprint bp2 = new Blueprint("mack", "mypaint2", pts2);
+
+        Set<Blueprint> set = new HashSet<Blueprint>();
+        set.add(bp0);
+        set.add(bp2);
+
+        HashMap<Blueprint,Integer> map = new HashMap<>();
+        
+        Blueprint temp = new Blueprint();
+        Iterator<Blueprint> it = set.iterator();
+        while (it.hasNext()) {
+            temp = it.next();
+            map.put(temp, temp.getPoints().size());
+        }
+
+        while (it.hasNext()) {
+            temp = it.next();
+            assertTrue(map.get(temp) > temp.getPoints().size());
+        }
+
     }
 
 }
