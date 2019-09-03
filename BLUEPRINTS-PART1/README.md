@@ -132,7 +132,7 @@ public class App {
         System.out.println(bluePrintS.getAllBlueprints().toString());
 ```
 
-3. 4. Primero se implemento el metodo getAllBlueprints() que sera al que se le aplicara el debido filtro. 
+3 y 4.  Primero se implemento el metodo getAllBlueprints() que sera al que se le aplicara el debido filtro. 
 
 ```java
 public Set<Blueprint> getAllBlueprints(){
