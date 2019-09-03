@@ -36,12 +36,13 @@ public class App {
         bluePrintS.addNewBlueprint(bp0);
         bluePrintS.addNewBlueprint(bp1);
         bluePrintS.addNewBlueprint(bp2);
-        //bluePrintS.addNewBlueprint(bp3);
-        //bluePrintS.addNewBlueprint(bp4);
-        //bluePrintS.addNewBlueprint(bp5);
-        /*System.out.println(bluePrintS.getBlueprint("luis", "mypaintFrits").toString());
+        bluePrintS.addNewBlueprint(bp3);
+        bluePrintS.addNewBlueprint(bp4);
+        bluePrintS.addNewBlueprint(bp5);
+        System.out.println(bluePrintS.getBlueprint("luis", "mypaintFrits").toString());
         System.out.println(bluePrintS.getBlueprintsByAuthor("mack").toString());
-        System.out.println(bluePrintS.getBlueprintsByAuthor("john").toString());*/
+        System.out.println(bluePrintS.getBlueprintsByAuthor("john").toString());
+        System.out.println(bluePrintS.getAllBlueprints().toString());
         for(Blueprint s: bluePrintS.getAllBlueprints()){
             System.out.println("--------------------------------");
             for (Point p: s.getPoints()){

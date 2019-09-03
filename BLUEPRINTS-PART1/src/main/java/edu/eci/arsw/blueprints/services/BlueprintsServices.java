@@ -26,7 +26,7 @@ public class BlueprintsServices {
     BlueprintsPersistence bpp=null;
     
     @Autowired 
-    @Qualifier ("intercalado")         
+    @Qualifier ("redundante")         
     Filter filtro=null;
     
     public void addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException{

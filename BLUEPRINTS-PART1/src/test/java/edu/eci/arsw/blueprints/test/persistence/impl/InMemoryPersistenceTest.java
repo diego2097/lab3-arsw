@@ -109,14 +109,14 @@ public class InMemoryPersistenceTest {
     }
 
     @Test
-    public void SubsamplingFiltering() {
+    public void RedundancyFiltering() {
         SubsamplingFiltering filtro = new SubsamplingFiltering();
 
         Point[] pts0 = new Point[]{new Point(40, 30), new Point(30, 40), new Point(40, 30), new Point(40, 80), new Point(40, 100), new Point(100, 40)};
         Blueprint bp0 = new Blueprint("mack", "mypaint", pts0);
         Point[] pts1 = new Point[]{new Point(20, 15), new Point(40, 40)};
         Blueprint bp1 = new Blueprint("john", "mypaintJ", pts1);
-        Point[] pts2 = new Point[]{new Point(40, 40), new Point(25, 40), new Point(40, 25)};
+        Point[] pts2 = new Point[]{new Point(40, 40), new Point(25, 40), new Point(40, 25),new Point(40, 25)};
         Blueprint bp2 = new Blueprint("mack", "mypaint2", pts2);
 
         Set<Blueprint> set = new HashSet<Blueprint>();
@@ -138,5 +138,4 @@ public class InMemoryPersistenceTest {
         }
 
     }
-
 }

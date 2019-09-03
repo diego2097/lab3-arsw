@@ -58,6 +58,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
        }
        return retornar;
     }
+    
      public Set<Blueprint> getAllBlueprints(){
        Set<Blueprint> retornar=new HashSet<>();
        for(Tuple<String,String> e : blueprints.keySet()){
