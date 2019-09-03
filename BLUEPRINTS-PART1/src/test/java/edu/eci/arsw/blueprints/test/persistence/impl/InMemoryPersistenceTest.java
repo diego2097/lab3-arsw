@@ -6,6 +6,7 @@
 package edu.eci.arsw.blueprints.test.persistence.impl;
 
 import edu.eci.arsw.blueprints.filter.impl.SubsamplingFiltering;
+import edu.eci.arsw.blueprints.filter.impl.RedundancyFiltering;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
@@ -110,7 +111,7 @@ public class InMemoryPersistenceTest {
 
     @Test
     public void RedundancyFiltering() {
-        SubsamplingFiltering filtro = new SubsamplingFiltering();
+        RedundancyFiltering filtro = new RedundancyFiltering();
 
         Point[] pts0 = new Point[]{new Point(40, 30), new Point(30, 40), new Point(40, 30), new Point(40, 80), new Point(40, 100), new Point(100, 40)};
         Blueprint bp0 = new Blueprint("mack", "mypaint", pts0);
@@ -123,6 +124,36 @@ public class InMemoryPersistenceTest {
         set.add(bp0);
         set.add(bp2);
 
+        HashMap<Blueprint,Integer> map = new HashMap<>();
+        
+        Blueprint temp = new Blueprint();
+        Iterator<Blueprint> it = set.iterator();
+        while (it.hasNext()) {
+            temp = it.next();
+            map.put(temp, temp.getPoints().size());
+        }
+
+        while (it.hasNext()) {
+            temp = it.next();
+            assertTrue(map.get(temp) > temp.getPoints().size());
+        }
+
+    }
+     @Test
+    public void SubsamplingFiltering() {
+        SubsamplingFiltering filtro = new SubsamplingFiltering();
+
+        Point[] pts0 = new Point[]{new Point(50, 30), new Point(70, 45), new Point(40, 30), new Point(80, 90), new Point(40, 100), new Point(100, 40)};
+        Blueprint bp0 = new Blueprint("mack", "mypaint", pts0);
+        Point[] pts1 = new Point[]{new Point(20, 15), new Point(45, 40)};
+        Blueprint bp1 = new Blueprint("john", "mypaintJ", pts1);
+        Point[] pts2 = new Point[]{new Point(42, 45), new Point(25, 46), new Point(4, 5),new Point(40, 25)};
+        Blueprint bp2 = new Blueprint("mack", "mypaint2", pts2);
+        
+        Set<Blueprint> set = new HashSet<Blueprint>();
+        set.add(bp0);
+        set.add(bp2);
+        set.add(bp1);
         HashMap<Blueprint,Integer> map = new HashMap<>();
         
         Blueprint temp = new Blueprint();

@@ -34,7 +34,7 @@ public class App {
         Point[] pts5 = new Point[]{new Point(40, 40), new Point(15, 15)};
         Blueprint bp5 = new Blueprint("luis", "mypaintFrits", pts5);
         bluePrintS.addNewBlueprint(bp0);
-        /*bluePrintS.addNewBlueprint(bp1);
+        bluePrintS.addNewBlueprint(bp1);
         bluePrintS.addNewBlueprint(bp2);
         bluePrintS.addNewBlueprint(bp3);
         bluePrintS.addNewBlueprint(bp4);
@@ -42,7 +42,7 @@ public class App {
         System.out.println(bluePrintS.getBlueprint("luis", "mypaintFrits").toString());
         System.out.println(bluePrintS.getBlueprintsByAuthor("mack").toString());
         System.out.println(bluePrintS.getBlueprintsByAuthor("john").toString());
-        System.out.println(bluePrintS.getAllBlueprints().toString());*/
+        System.out.println(bluePrintS.getAllBlueprints().toString());
         for(Blueprint s: bluePrintS.getAllBlueprints()){
             System.out.println("--------------------------------");
             for (Point p: s.getPoints()){
