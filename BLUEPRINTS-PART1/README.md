@@ -271,3 +271,76 @@ Creamos las pruebas necesarias para esta funcionalidad.
 
     }
 ```
+Creamos la implementacion SubsamplingFiltering que elimina los puntos abyasentes.
+```java
+ @Override
+    public Set<Blueprint> filtrar(Set<Blueprint> set) {
+        System.out.println(set);
+        Set<Blueprint> retornar = new HashSet<>();
+
+        Iterator<Blueprint> it = set.iterator();
+        Blueprint temp;
+        int rango = 1;
+        while (it.hasNext()) {
+            List<Point> lista = new ArrayList<Point>();
+            boolean f = true;
+            temp = it.next();
+            lista.add(temp.getPoints().get(0));
+            for (int i = 1; i < temp.getPoints().size(); i++) {
+                f = true;
+                int x1 = temp.getPoints().get(i).getX();
+                int y1 = temp.getPoints().get(i).getY();
+                for (int j = 0; j < lista.size() && f; j++) {
+                    int x2 = lista.get(j).getX();
+                    int y2 = lista.get(j).getY();
+                    if (( (x1+rango == x2 && y1 == y2)|| (x1-rango == x2 && y1 == y2) 
+                            || (x1 == x2 && y1+rango == y2)) || (x1 == x2 && y1-rango == y2)
+                            || (x1+rango == x2 && y1+rango == y2) || (x1-rango == x2 && y1-rango == y2)
+                            || (x1+rango == x2 && y1-rango == y2) || (x1-rango == x2 && y1+rango == y2)
+                            ) {
+                        f = false;
+                    }
+                }
+                if (f) {
+                    lista.add(temp.getPoints().get(i));
+                }
+            }   
+            temp.setPoints(lista);
+            retornar.add(temp);
+        }
+        return retornar;
+    }
+```
+prueba: 
+```java
+ @Test
+    public void SubsamplingFiltering() {
+        SubsamplingFiltering filtro = new SubsamplingFiltering();
+
+        Point[] pts0 = new Point[]{new Point(50, 30), new Point(70, 45), new Point(40, 30), new Point(80, 90), new Point(40, 100), new Point(100, 40)};
+        Blueprint bp0 = new Blueprint("mack", "mypaint", pts0);
+        Point[] pts1 = new Point[]{new Point(20, 15), new Point(45, 40)};
+        Blueprint bp1 = new Blueprint("john", "mypaintJ", pts1);
+        Point[] pts2 = new Point[]{new Point(42, 45), new Point(25, 46), new Point(4, 5),new Point(40, 25)};
+        Blueprint bp2 = new Blueprint("mack", "mypaint2", pts2);
+        
+        Set<Blueprint> set = new HashSet<Blueprint>();
+        set.add(bp0);
+        set.add(bp2);
+        set.add(bp1);
+        HashMap<Blueprint,Integer> map = new HashMap<>();
+        
+        Blueprint temp = new Blueprint();
+        Iterator<Blueprint> it = set.iterator();
+        while (it.hasNext()) {
+            temp = it.next();
+            map.put(temp, temp.getPoints().size());
+        }
+
+        while (it.hasNext()) {
+            temp = it.next();
+            assertTrue(map.get(temp) > temp.getPoints().size());
+        }
+
+    }
+```
